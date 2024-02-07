@@ -1,0 +1,126 @@
+# Comments starts with hash(#) symbol. 
+# Between the keyword and the value should be at least one tab.
+# Press enter key at the end of each line of data, even the last line of the file.
+# Each block is separated by a blank line
+# Data to compare with analytical SS
+
+#-------------------------------------------------
+# GEOMETRY
+#-------------------------------------------------
+LENGTH		15	cm
+DIAMETER	7.5	cm
+
+#-------------------------------------------------
+# ROCK
+#-------------------------------------------------
+POROSITY		0.297
+PERMEABILITY	260		mD  
+INITIALWATER	1 
+HETEROGENEOUS
+POROSITY_PROFILE    .\porosity_profile.xlsx
+ALPHA 1
+INDEX_MASK 24,8
+
+#-------------------------------------------------
+# FLUID
+#-------------------------------------------------
+DENSITYW		1001.2	kg/m^3
+DENSITYNW		707.3		kg/m^3
+VISCOSITYW		0.576		cP
+VISCOSITYNW		0.619		cP
+
+#-------------------------------------------------
+# PROCESS
+#-------------------------------------------------
+USS     Drainage
+
+#-------------------------------------------------
+# SIMULATION
+#-------------------------------------------------
+TYPE		forward
+NCELLS_X	37
+NCELLS_Y    17
+#         	number	first_cell_Sw   last_cell_Sw   
+BCELLS		1       1             1
+MAXTIMESTEP	1 hour
+RAMPUPSTEPS 5
+LOAD_FROM_SAT_PROF
+# HIGH_PERCISION_MODE
+
+#-------------------------------------------------
+# SCHEDULE
+#-------------------------------------------------
+#			fileName
+FILENAME	.\sched_decane_brine.txt
+PINI		1		bar
+POUT		1		bar
+
+#-------------------------------------------------
+# OBSERVATION
+#-------------------------------------------------
+#			fileName
+PRESSURE	.\pressure_decane_brine.txt
+PRODUCTION  .\production_decane_brine_tOffset.txt
+SATPROFILE	.\saturation_profile_obs_complete_cleaned_to_20h_NoFirstRow.xlsx
+
+#-------------------------------------------------
+# SATURATION FUNCTIONS
+#-------------------------------------------------
+KR          LET 0.30466  0   0.77143  0.94017   4.6434  1.3351  5.4518  3.6901  0.76327 2.4696
+PC         	BROOKS-COREY-SEPARATE-SWC	0.23671	0	0.075672	1.1463
+
+#-------------------------------------------------
+# PLOT OPTIONS
+#-------------------------------------------------
+STYLE			docked  #docked
+COLORMAP		jet		#parula		hsv
+DISPLAYTIME		hour
+DISPLAYLENGTH	cm
+DISPLAYVOLUME	cm^3
+DISPLAYPRESS	bar
+DISPLAYRATE		cm^3/hour
+
+#-------------------------------------------------
+# OUTPUT OPTIONS
+#-------------------------------------------------
+
+#-------------------------------------------------
+# OBJECTIVE FUNCTION CONFIGURATIONS
+#-------------------------------------------------
+EXCEL_FILE_NAME    kr_LET.xlsx
+EXCEL_FILE_PATH    .
+#MULTIPOINT         
+#MULTIPOINT_RANDOM_NUMBERS      10
+KR_HM
+KR_MODEL    LET
+#PC_HM
+#PC_MODEL    BROOKS-COREY
+PDIFF_WEIGHT    1
+SWAVG_WEIGHT    1
+PROD_WEIGHT     1
+SAT_PROFILE_WEIGHT      1
+PDIF_ERROR      0
+SWAVG_ERROR     0
+PROD_ERROR      0
+SAT_PROFILE_ERROR       0
+
+#-------------------------------------------------
+# HISTORY MATCH CONFIGURATIONS
+#-------------------------------------------------
+USE_PARALLEL
+OPTIMALITY_TOLERANCE        1e-6
+STEP_TOLERANCE          1e-3
+MAX_FUNCTION_EVALUATIONS    6000
+SCALE_PROBLEM
+OBJECTIVE_FUNCTION_TYPE    normal    #Simultaneous
+#CENT_FILE_NAME      ABC.txt
+#CENT_FILE_PATH      C:\Users\Omidreza\Documents\GitHub\SCAL
+HISTORYMATCH_ALGORITHM      active-set
+
+#-------------------------------------------------
+# MCMC SPECIFIC CONFIGURATIONS
+#-------------------------------------------------
+RANDOM_SEED     3751
+SAMPLE_REFINEMENT_COUNT     1
+CHAINSIZE       20000
+MPI_ENABLED  

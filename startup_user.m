@@ -1,0 +1,1 @@
+mrstPath('add', 'ad-scal-heterogeneous', fullfile(ROOTDIR,'modules','ad-scal-heterogeneous'))
